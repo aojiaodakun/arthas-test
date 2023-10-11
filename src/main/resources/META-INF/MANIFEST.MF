@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
+Premain-Class: com.hzk.arthas.agent.MethodTimerAgent
+Boot-Class-Path: javassist-3.26.0-GA.jar
+Can-Retransform-Classes: true
