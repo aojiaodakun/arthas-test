@@ -25,16 +25,18 @@ public class AttachMethodTimerTransformer implements ClassFileTransformer {
 
         if (className.startsWith("com/hzk/")) {
             className = className.replace("/", ".");
-            try {
-                String methodName = "sayHello";
-                CtClass ctclass = ClassPool.getDefault().get(className);// 使用全称,用于取得字节码类<使用javassist>
-                CtMethod ctmethod = ctclass.getDeclaredMethod(methodName);// 得到这方法实例
-                ctmethod.insertBefore("System.out.println(6666);");
-                return ctclass.toBytecode();
-            } catch (Exception ex){
-                ex.printStackTrace();
+            if (className.equals("com.hzk.arthas.agent.TimeTest")) {
+                try {
+                    String methodName = "sayHello";
+                    CtClass ctclass = ClassPool.getDefault().get(className);// 使用全称,用于取得字节码类<使用javassist>
+                    CtMethod ctmethod = ctclass.getDeclaredMethod(methodName);// 得到这方法实例
+                    ctmethod.insertBefore("System.out.print(\" dakun\");System.out.println();");
+                    return ctclass.toBytecode();
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                }
+                return classfileBuffer;
             }
-            return classfileBuffer;
         }
         return classfileBuffer;
     }

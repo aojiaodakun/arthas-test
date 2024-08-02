@@ -2,6 +2,8 @@ package com.hzk.arthas.agent;
 
 
 import com.hzk.arthas.attach.AttachMethodTimerTransformer;
+import com.hzk.arthas.term.server.HttpTelnetTermServer;
+import com.hzk.arthas.term.server.HttpTelnetTermServerNew;
 
 import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
@@ -16,8 +18,8 @@ public class MethodTimerAgent {
      * @param instrumentation
      */
     public static void premain(String agentArgs, Instrumentation instrumentation) {
-        System.out.println("Agent premain called");
-        instrumentation.addTransformer(new MethodTimerTransformer());
+        System.err.println("Agent premain called");
+        main(agentArgs, instrumentation);
     }
 
     /**
@@ -28,12 +30,8 @@ public class MethodTimerAgent {
      * @param instrumentation
      */
     public static void agentmain(String agentArgs, Instrumentation instrumentation) {
-        System.out.println("Agent agentmain called");
-        /**
-         * canRetransform=true
-         * 运行过程中只能对类的方法体进行修改，无法新增或者删除方法
-         */
-        instrumentation.addTransformer(new AttachMethodTimerTransformer(), true);
+        System.err.println("Agent agentmain called");
+        main(agentArgs, instrumentation);
 
         String className = "com.hzk.arthas.agent.TimeTest";
         Class[] loadedClasses = instrumentation.getAllLoadedClasses();
@@ -51,8 +49,27 @@ public class MethodTimerAgent {
                 e.printStackTrace();
             }
         }
-
-
     }
+
+
+    private static synchronized void main(String args, final Instrumentation inst) {
+        /**
+         * canRetransform=true
+         * 运行过程中只能对类的方法体进行修改，无法新增或者删除方法
+         */
+        inst.addTransformer(new AttachMethodTimerTransformer(), true);
+        // 启动NettyServer，监听传入端口号
+        initTelnetTermServer();
+    }
+
+    private static void initTelnetTermServer(){
+        int port = Integer.getInteger("telnet.port", 3659);
+//        HttpTelnetTermServer telnetTermServer = new HttpTelnetTermServer("127.0.0.1", port, 5000L);
+//        telnetTermServer.listen();
+
+        HttpTelnetTermServerNew telnetTermServer = new HttpTelnetTermServerNew("127.0.0.1", port, 5000L);
+        telnetTermServer.listen();
+    }
+
 
 }

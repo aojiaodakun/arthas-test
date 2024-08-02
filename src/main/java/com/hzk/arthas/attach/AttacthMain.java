@@ -16,9 +16,14 @@ public class AttacthMain {
         String pid = "";
         Map<Long, String> pid2mainClassMap = ProcessUtils.listProcessByJps(false);
         for (Map.Entry<Long, String> entry : pid2mainClassMap.entrySet()) {
-            if (entry.getValue().endsWith(TimeTest.class.getName())) {
-                pid = String.valueOf(entry.getKey());
-                break;
+            String value = entry.getValue();
+            String[] tempArray = value.split(" ");
+            if (tempArray.length > 1) {
+                if (tempArray[1].startsWith("com.hzk.arthas.agent.TimeTest")) {
+//                if (tempArray[1].startsWith("com.hzk.arthas.mservice.MService")) {
+                    pid = String.valueOf(entry.getKey());
+                    break;
+                }
             }
         }
         String jar = "arthas-test-1.0-SNAPSHOT.jar";
