@@ -30,7 +30,7 @@ public class AttachMethodTimerTransformer implements ClassFileTransformer {
                     String methodName = "sayHello";
                     CtClass ctclass = ClassPool.getDefault().get(className);// 使用全称,用于取得字节码类<使用javassist>
                     CtMethod ctmethod = ctclass.getDeclaredMethod(methodName);// 得到这方法实例
-                    ctmethod.insertBefore("System.out.print(\" dakun\");System.out.println();");
+                    ctmethod.insertBefore("System.out.print(\" 阿坤\");System.out.println();");
                     return ctclass.toBytecode();
                 } catch (Exception ex){
                     ex.printStackTrace();

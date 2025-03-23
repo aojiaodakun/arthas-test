@@ -1,11 +1,17 @@
 package com.hzk.arthas.demo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class MathGame {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(MathGame.class);
+
     private static Random random = new Random();
 
     private int illegalArgumentCount = 0;
@@ -23,21 +29,22 @@ public class MathGame {
             int number = random.nextInt()/10000;
             List<Integer> primeFactors = primeFactors(number);
             print(number, primeFactors);
-
         } catch (Exception e) {
-            System.out.println(String.format("illegalArgumentCount:%3d, ", illegalArgumentCount) + e.getMessage());
+            LOGGER.error(String.format("illegalArgumentCount:%3d, ", illegalArgumentCount) + e.getMessage());
+//            System.out.println(String.format("illegalArgumentCount:%3d, ", illegalArgumentCount) + e.getMessage());
         }
     }
 
     public static void print(int number, List<Integer> primeFactors) {
-        StringBuffer sb = new StringBuffer(number + "=");
+        StringBuilder sb = new StringBuilder(number + "=");
         for (int factor : primeFactors) {
             sb.append(factor).append('*');
         }
         if (sb.charAt(sb.length() - 1) == '*') {
             sb.deleteCharAt(sb.length() - 1);
         }
-        System.out.println(sb);
+        LOGGER.info(sb.toString());
+//        System.out.println(sb);
     }
 
     public List<Integer> primeFactors(int number) {
@@ -45,7 +52,6 @@ public class MathGame {
             illegalArgumentCount++;
             throw new IllegalArgumentException("number is: " + number + ", need >= 2");
         }
-
         List<Integer> result = new ArrayList<Integer>();
         int i = 2;
         while (i <= number) {
@@ -57,7 +63,6 @@ public class MathGame {
                 i++;
             }
         }
-
         return result;
     }
 }
