@@ -10,6 +10,25 @@
 
 
     <dependencies>
+        <!-- 日志框架 start-->
+        <!-- 日志门面slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+        <!-- logback日志框架，默认实现slf4j协议 -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.13</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.2.13</version>
+        </dependency>
+        <!-- 日志框架 end-->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -57,6 +76,26 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.4</version>
+        </dependency>
+        <!-- hutool start -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.31</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all1</artifactId>
+            <version>5.6.5</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/trd/hutool-all-5.6.5.jar</systemPath>
+        </dependency>
+        <!-- hutool end -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.69</version>
         </dependency>
         <dependency>
             <groupId>com.taobao.arthas</groupId>

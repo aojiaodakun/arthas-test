@@ -68,6 +68,10 @@ public class ThreadPoolTest {
         LOGGER.info("start success");
     }
 
+    public static void setTrdUrl(String trdUrl) {
+        TRD_URL = trdUrl;
+    }
+
     static class TestHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
